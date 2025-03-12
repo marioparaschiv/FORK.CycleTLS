@@ -120,6 +120,11 @@ const handleSpawn = (debug: boolean, fileName: string, port: number, filePath?: 
     cwd: path.dirname(execPath)
   };
   child = spawn(execPath, [], spawnOptions);
+
+  if (debug) {
+    child.stdout.on("data", console.log);
+  }
+    
   child.stderr.on("data", (stderr) => {
     const errorMessage = stderr.toString();
     if (errorMessage.includes("Request_Id_On_The_Left")) {
